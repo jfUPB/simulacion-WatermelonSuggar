@@ -13,6 +13,9 @@
 - ¿Qué resultados obtuviste?
 
 **Código modificado**
+
+[Enlace a la simulación aquí](https://editor.p5js.org/WatermelonSuggar/sketches/grtL8fRWi)
+
 ```js
 let walker1, walker2, walker3, walker4, walker5, walker6, walker7, walker8;
 
