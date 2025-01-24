@@ -12,6 +12,8 @@ Enlace de la simulación [aquí](https://editor.p5js.org/WatermelonSuggar/sketch
 
 Después de converger en el centro tienden hacia la derecha.
 
+![Actividad4](../../../../../src/assets/actividad4.png)
+
 ```js
 let walker1, walker2, walker3, walker4, walker5, walker6, walker7, walker8;
 
