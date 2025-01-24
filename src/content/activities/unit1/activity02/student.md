@@ -1,4 +1,4 @@
-### ¿Cómo se conecta lo anterior con mis intereses? O tal vez ¿Esto abre la puerta a la exploración de otras posibilidades?
+**¿Cómo se conecta lo anterior con mis intereses? O tal vez ¿Esto abre la puerta a la exploración de otras posibilidades?**
 
 Bueno, mis intereses son muy variados, pero siento que, de alguna u otra manera, puedo conectarlos con proyectos creativos que involucren arte generativo. Me gusta mucho el arte abstracto y también quiero mejorar mis habilidades de ilustración. Sería increíble poder retratar animales o momentos específicos de mi vida a partir de código.
 
