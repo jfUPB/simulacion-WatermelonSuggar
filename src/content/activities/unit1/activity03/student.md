@@ -12,6 +12,9 @@ Vas a realizar un experimento con el código:
 Vas a documentar
 
 - Describe el experimento que vas a realizar.
+  - Qué pasaría si se crearan dos walkers que inician en lados opuestos del lienzo de manera simultánea
+
+
 - ¿Qué pregunta quieres responder con este experimento?
 - ¿Qué resultados esperas obtener?
 - ¿Qué resultados obtuviste?
