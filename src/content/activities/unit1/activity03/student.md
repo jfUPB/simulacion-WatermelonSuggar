@@ -104,9 +104,9 @@ class Walker {
     }
   }
 }
-
-
 ```
+
+![CodigoFinal](../../../../assets/experimentacionActiviidad3.png)
 
 - ¿Qué aprendiste de este experimento?
 
