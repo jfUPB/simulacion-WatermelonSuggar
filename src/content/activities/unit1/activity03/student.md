@@ -2,15 +2,19 @@
 
 - Describe el experimento que vas a realizar.
   - **Qué pasaría si** se crearan 2 walkers que inician en lados opuestos del lienzo de manera simultánea y son un poco más visibles que el original.
-  - **Qué pasaría si** estos dos walkers tienen a reunirse en el centro del canvas
-  - **Qué pasaría si** después de reunirse en el centro emprenden de nuevoo su camino aleatorio
-  - **Qué pasaría si** todo lo anterioor ocurre con 8 walkers
+  - **Qué pasaría si** estos dos walkers tienden a reunirse en el centro del canvas.
+  - **Qué pasaría si** después de reunirse en el centro emprenden de nuevo su camino aleatorio.
+  - **Qué pasaría si** todo lo anterioor ocurre con 8 walkers de diferentes colores.
 
 - ¿Qué pregunta quieres responder con este experimento?
-  -¿Cómo a partir de una base de código sencilla puedo crear un sistema de random walks?
+  - ¿Cómo a partir de una base de código sencilla puedo crear un sistema de random walks?
 
 - ¿Qué resultados esperas obtener?
+  - Espero que se forme una reunión divertida de random walks en torno al centro del canvas.
+
 - ¿Qué resultados obtuviste?
+
+![CodigoFinal](../../../../assets/experimentacionActiviidad3.png)
 
 **Código modificado**
 
@@ -109,9 +113,5 @@ class Walker {
 }
 ```
 
-![CodigoFinal](../../../../assets/experimentacionActiviidad3.png)
-
 - ¿Qué aprendiste de este experimento?
-
-**Entrega**: los asuntos que te pido documentar en el enunciado, el código con las modificaciones y 
-una captura de pantalla que muestre el resultado del experimento.
+  - La construcción del resultado final fue progresiva, fui abordando una a una las curiosidades que se me presentaron y así pude entender cada una de las modificaciones que le realicé al código original. Como esta metodología me funcionó la seguiré implementando en las demás actividades  
