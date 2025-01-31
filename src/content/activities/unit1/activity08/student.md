@@ -10,4 +10,8 @@ El proyecto será de exploración de partículas y cómo podemos crear formas di
 
 **Reporta los referentes que usaste para inspirarte.**
 
+![Referencia unidad 1](../../../../assets/ref_unidad1.png)
+
 Patch de partículas en cables link [aquí](https://cables.gl/p/PSCYWt)
+
+Cambio a modo "fiesta" inspirado en el trabajo de Emanuel :)
