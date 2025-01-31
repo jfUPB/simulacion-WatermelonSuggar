@@ -2,6 +2,18 @@
 
 Enlace del proyecto [aquí](https://editor.p5js.org/WatermelonSuggar/sketches/vnKIzoNlA)
 
+**Imagen original**
+
+![ballena original](../../../../assets/ballena.jpg)
+
+**Imagen Modo Normal**
+
+![ballena normal](../../../../assets/u1_ballenaNormal.png)
+
+**Imagen Modo Fiesta**
+
+![ballena fiesta](../../../../assets/u1_ballenaFiesta.png)
+
 **Código**
 
 ```js
