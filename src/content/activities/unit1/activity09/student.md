@@ -153,12 +153,4 @@ class Particle {
     ellipse(this.pos.x, this.pos.y, this.size, this.size);
   }
 }
-
-
-
 ```
-
-
-Código de la aplicación.
-Captura del contenido generado.
-En caso de realizar alguna variación al concepto original, escribe un texto donde expliques la razón del cambio.
