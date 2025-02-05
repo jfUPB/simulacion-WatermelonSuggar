@@ -67,14 +67,6 @@ ynuevo = yactual + vy
 
 * Esta línea no funcionaría porque "position" y "velocity" son objetos tipo p5.vestor por lo que en Javascript no se pueden sumanr objetos directamente con el +.
 
-En JavaScript, el operador + funciona con:
-
-> ✅ Números → 2 + 3 = 5
-
-> ✅ Strings → "Hola" + " Mundo" = "Hola Mundo"
-
-> 🚫 Objetos → obj1 + obj2 no es válido
-
 ¿Cómo se hace correctamente?
 
 1. Usar el método **.add()** para modificar el vector original (como en el código analizado)
