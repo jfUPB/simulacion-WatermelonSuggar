@@ -75,6 +75,12 @@ function drawArrow(base, vec, myColor) {
   base.set(mouseX, mouseY);
   ```
 
+* Adaptar la escala de los vectores
+    * En lugar de usar un valor constante, scaleFactor ahora depende del mouseX. Se usa map(mouseX, 0, width, 5, 20) para interpolar la escala en un rango específico.
+
+* Se mantiene la lógica de interpolación (lerp) para el vector intermedio (v3).
+* Se combina con lerpColor(colorStart, colorEnd, t) para cambiar de color gradualmente.
+
 
 
 
