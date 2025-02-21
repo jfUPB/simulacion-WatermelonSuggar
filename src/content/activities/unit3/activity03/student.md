@@ -1,0 +1,7 @@
+Lo que más me llamó la atención de esta unidad fue darme cuenta de cómo el uso de fuerzas hace que los movimientos en una simulación se sientan más naturales y realistas. Antes solo trabajaba con velocidad y aceleración de forma directa, pero ahora entiendo que agregar fuerzas como la gravedad o la fricción hace que todo se vea más creíble.
+
+Antes, usaba estos conceptos de manera muy técnica en ejercicios de modelamiento, donde aplicaba ecuaciones y ajustes precisos, pero sin enfocarme tanto en cómo estos principios pueden hacer que una simulación se sienta más viva. Ahora veo que al aplicar fuerzas, los objetos reaccionan de manera más fluida y creíble dentro de una simulación.
+
+Me gusta la idea de aplicar esto en proyectos interactivos, como simulaciones donde los objetos respondan a su entorno de manera más natural. Por ejemplo, hacer que una partícula caiga como si realmente tuviera peso o que un personaje se mueva de manera más dinámica dependiendo de las fuerzas que actúan sobre él.
+
+Comparado con la unidad anterior, siento que ahora tengo más herramientas para hacer que las simulaciones sean menos predecibles y más parecidas a cómo funcionan las cosas en la vida real. En lugar de solo decirle a un objeto cómo moverse, ahora puedo crear reglas basadas en fuerzas y dejar que el movimiento ocurra de manera más natural. Es algo que definitivamente quiero seguir explorando.
