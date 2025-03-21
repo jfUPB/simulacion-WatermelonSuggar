@@ -35,15 +35,122 @@ Realicé varias versiones del proyecto hasta crear uno que me hiciera sentir có
 
     ![image](https://github.com/user-attachments/assets/4a3e8387-ce73-4f25-b0e0-c4ff14bd3fd8)
 
-  * [Versión 4](https://editor.p5js.org/WatermelonSuggar/sketches/O8e_XuJgW)
+
+* **Resultado final**
+
+[Versión 4: FINAL](https://editor.p5js.org/WatermelonSuggar/sketches/O8e_XuJgW)
  
-    ![image](https://github.com/user-attachments/assets/50084792-d7d2-4011-8093-99d9ad215c9f)
+![image](https://github.com/user-attachments/assets/2473f068-1119-448d-a76a-2bdf32cd90f9)
 
+![image](https://github.com/user-attachments/assets/a3e96766-bac9-4d62-b5c8-8a6a066f6f2b)
 
+**Código**
 
+```js
+let particles = [];
+let flowField;
+let cols, rows;
+let scl = 20;
+let inc = 0.1;
 
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  cols = floor(width / scl);
+  rows = floor(height / scl);
+  flowField = new Array(cols * rows);
+  
+  for (let i = 0; i < 5000; i++) {
+    particles.push(new Particle());
+  }
+}
 
+function draw() {
+  background(0,10);
+  let yoff = 0;
+  for (let y = 0; y < rows; y++) {
+    let xoff = 0;
+    for (let x = 0; x < cols; x++) {
+      let index = x + y * cols;
+      let angle = noise(xoff, yoff) * TWO_PI * 4;
+      let v = p5.Vector.fromAngle(angle);
+      flowField[index] = v;
+      v.setMag(1);
+      xoff += inc;
+    }
+    yoff += inc;
+  }
 
+  for (let particle of particles) {
+    particle.follow(flowField);
+    particle.update();
+    particle.edges();
+    particle.show();
+  }
+}
 
+class Particle {
+  constructor() {
+    this.pos = createVector(random(width), random(height));
+    this.vel = createVector(0, 0);
+    this.acc = createVector(0, 0);
+    this.maxSpeed = 2;
+    this.prevPos = this.pos.copy();
+    
+    // Probabilidad de atracción: Algunas partículas no serán atraídas al mouse
+    this.attractionFactor = random(0.2, 1); // Valores entre 0.2 y 1
+  }
 
+  follow(vectors) {
+    let x = floor(this.pos.x / scl);
+    let y = floor(this.pos.y / scl);
+    let index = x + y * cols;
+    let force = vectors[index];
+    this.applyForce(force);
+  }
 
+  applyForce(force) {
+    this.acc.add(force);
+  }
+
+  update() {
+    this.vel.add(this.acc);
+    this.vel.limit(this.maxSpeed);
+    this.pos.add(this.vel);
+    this.acc.mult(0);
+  }
+
+  edges() {
+    if (this.pos.x > width) this.pos.x = 0;
+    if (this.pos.x < 0) this.pos.x = width;
+    if (this.pos.y > height) this.pos.y = 0;
+    if (this.pos.y < 0) this.pos.y = height;
+  }
+
+  show() {
+    let distToMouse = dist(this.pos.x, this.pos.y, mouseX, mouseY);
+    
+    // Solo algunas partículas serán atraídas
+    if (random(1) < this.attractionFactor) {
+      let attractionStrength = map(distToMouse, 0, width, 0.05, 0); 
+      let forceX = (mouseX - this.pos.x) * attractionStrength;
+      let forceY = (mouseY - this.pos.y) * attractionStrength;
+      this.vel.x += forceX;
+      this.vel.y += forceY;
+    }
+
+    // Color cambia con la distancia al mouse
+    let colorChange = map(distToMouse, 0, width, 255, 0);
+    stroke(colorChange, 100, 255 - colorChange, 100);
+
+    // Dibujar las ondas
+    strokeWeight(1);
+    line(this.pos.x, this.pos.y, this.pos.x - this.vel.x, this.pos.y - this.vel.y);
+  }
+
+  updatePrev() {
+    this.prevPos.x = this.pos.x;
+    this.prevPos.y = this.pos.y;
+  }
+}
+
+```
