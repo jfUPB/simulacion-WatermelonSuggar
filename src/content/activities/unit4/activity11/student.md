@@ -31,18 +31,23 @@ Realicé varias versiones del proyecto hasta crear uno que me hiciera sentir có
 
   ![image](https://github.com/user-attachments/assets/d0af7394-8294-4c23-a6d6-b47fbfb06a71)
 
-  * [Versión 3](https://editor.p5js.org/WatermelonSuggar/sketches/3wBjNkq-T)
+  * [Versión 3](https://editor.p5js.org/WatermelonSuggar/sketches/O8e_XuJgW)
 
-    ![image](https://github.com/user-attachments/assets/4a3e8387-ce73-4f25-b0e0-c4ff14bd3fd8)
+   ![image](https://github.com/user-attachments/assets/2415ed9a-e7bd-4192-93cd-5082e2a37df9)
+
 
 
 * **Resultado final**
 
-[Versión 4: FINAL](https://editor.p5js.org/WatermelonSuggar/sketches/O8e_XuJgW)
- 
-![image](https://github.com/user-attachments/assets/2473f068-1119-448d-a76a-2bdf32cd90f9)
+ * Finalmente decidí explorar las funciones sinuoidales y la interacción sucede al pasar el mouse sobre la simulación, el color de las partículas varía. En un principio son azules y si paso el mouse sobre ellas se vuelven naranjas gracias a una rampa de color.
 
-![image](https://github.com/user-attachments/assets/a3e96766-bac9-4d62-b5c8-8a6a066f6f2b)
+[Versión FINAL](https://editor.p5js.org/WatermelonSuggar/sketches/iPXaAoNYK)
+ 
+![image](https://github.com/user-attachments/assets/a95f6fe4-e58a-4c3a-a83a-3b12b5ad4753)
+
+![image](https://github.com/user-attachments/assets/eac19b75-e443-45b4-a7a5-28f4236ce0a5)
+
+
 
 **Código**
 
@@ -65,7 +70,7 @@ function setup() {
 }
 
 function draw() {
-  background(0,10);
+  background(0, 10);
   let yoff = 0;
   for (let y = 0; y < rows; y++) {
     let xoff = 0;
@@ -96,8 +101,14 @@ class Particle {
     this.maxSpeed = 2;
     this.prevPos = this.pos.copy();
     
-    // Probabilidad de atracción: Algunas partículas no serán atraídas al mouse
-    this.attractionFactor = random(0.2, 1); // Valores entre 0.2 y 1
+    // Definir si la partícula sigue el mouse de forma sinusoidal o directa
+    this.attractionFactor = random(0.2, 1);
+    this.sinusoidal = this.attractionFactor > 0.6; // 60% en zigzag
+
+    // Parámetros personalizados para el movimiento sinusoidal
+    this.sinAmp = random(3, 15);  // Amplitud entre 3 y 15 px
+    this.freq = random(0.05, 0.3); // Frecuencia entre 0.05 y 0.3
+    this.phaseOffset = random(TWO_PI); // Fase inicial diferente para cada partícula
   }
 
   follow(vectors) {
@@ -128,28 +139,35 @@ class Particle {
 
   show() {
     let distToMouse = dist(this.pos.x, this.pos.y, mouseX, mouseY);
-    
-    // Solo algunas partículas serán atraídas
-    if (random(1) < this.attractionFactor) {
-      let attractionStrength = map(distToMouse, 0, width, 0.05, 0); 
-      let forceX = (mouseX - this.pos.x) * attractionStrength;
-      let forceY = (mouseY - this.pos.y) * attractionStrength;
-      this.vel.x += forceX;
-      this.vel.y += forceY;
+
+    let attractionStrength = map(distToMouse, 0, width, 0.05, 0);
+    let angle = atan2(mouseY - this.pos.y, mouseX - this.pos.x);
+
+    let forceX, forceY;
+
+    if (this.sinusoidal) {
+      // Movimiento en zigzag con parámetros personalizados
+      let sinOffsetX = sin(frameCount * this.freq + this.phaseOffset) * this.sinAmp;
+      let sinOffsetY = cos(frameCount * this.freq + this.phaseOffset) * this.sinAmp;
+
+      forceX = cos(angle) * attractionStrength * 5 + sinOffsetX;
+      forceY = sin(angle) * attractionStrength * 5 + sinOffsetY;
+    } else {
+      // Movimiento directo
+      forceX = cos(angle) * attractionStrength * 5;
+      forceY = sin(angle) * attractionStrength * 5;
     }
+
+    this.vel.x += forceX;
+    this.vel.y += forceY;
 
     // Color cambia con la distancia al mouse
     let colorChange = map(distToMouse, 0, width, 255, 0);
     stroke(colorChange, 100, 255 - colorChange, 100);
 
-    // Dibujar las ondas
+    // Dibujar líneas que muestran el recorrido
     strokeWeight(1);
     line(this.pos.x, this.pos.y, this.pos.x - this.vel.x, this.pos.y - this.vel.y);
-  }
-
-  updatePrev() {
-    this.prevPos.x = this.pos.x;
-    this.prevPos.y = this.pos.y;
   }
 }
 
