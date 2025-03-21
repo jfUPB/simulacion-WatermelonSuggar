@@ -39,8 +39,6 @@ Realicé varias versiones del proyecto hasta crear uno que me hiciera sentir có
 
 * **Resultado final**
 
- * Finalmente decidí explorar las funciones sinuoidales y la interacción sucede al pasar el mouse sobre la simulación, el color de las partículas varía. En un principio son azules y si paso el mouse sobre ellas se vuelven naranjas gracias a una rampa de color.
-
 [Versión FINAL](https://editor.p5js.org/WatermelonSuggar/sketches/iPXaAoNYK)
  
 ![image](https://github.com/user-attachments/assets/a95f6fe4-e58a-4c3a-a83a-3b12b5ad4753)
