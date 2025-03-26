@@ -1,0 +1,1 @@
+Entrega: selecciona dos proyectos que mencionen en el artículo que te llamen la atención y que te gustaría explorar más. Escribe un breve resumen de cada uno de ellos y comenta por qué te interesan y cómo crees que se pueden conectar con tu perfil profesional o con algún interés personal que tengas.
