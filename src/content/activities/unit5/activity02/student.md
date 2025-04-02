@@ -118,8 +118,45 @@ ________________________________________________________________________________
 
 ✅ 3. Analiza el ejemplo 4.5: [a Particle System with Inheritance and Polymorphism.](https://natureofcode.com/particles/#example-45-a-particle-system-with-inheritance-and-polymorphism)
 
+**Código original**
+
 > ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?
 
+* Creación:
+  * En cada frame (draw() en sketch.js), se llama a emitter.addParticle(), lo que añade una nueva partícula al sistema.
+  * La partícula puede ser un Confetti (cuadrado) o una Particle (círculo), con un 50% de probabilidad para cada una.
+  * Todas las partículas inician en la misma posición this.origin (el punto del emisor).
+
+*  Desaparición:
+  * En cada frame run() se actualiza cada partícula (p.run()), verificando si su ciclo de vida lifespan es menor a 0.
+  * Si la partícula "ha muerto", se elimina del array de particles con splice(i,1). 
+  
+*  Gestión de memoria: Se eliminan del array las partículas inactivas para evitar la acumulación de memoria.
+
+
+**Código modificado**
+
+[Simulación modificada aquí](https://editor.p5js.org/WatermelonSuggar/sketches/MD0prJkgp)
+
+![image](https://github.com/user-attachments/assets/f787440f-e03b-4327-8681-52f2743e6ae9)
+
+
+
+> 🌳Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste.
+
+* No realicé ninguna modificación en cuanto a la generación de partículas porque quería realizar los cambios desde la integración de un nuevo concepto visto en unidades anteriores. Así que las partículas se siguen generando gracias al emitter, siguen estando las posibilidades 50/50 de que la partícula sea un cuadrado (cofetti.js) o un círculo en (particle.js). Y se siguen desapareciendo si su ciclo de vida es menor a 0, para evitar saturar la memoria.
+
+> 🌳Explica qué concepto aplicaste, cómo lo aplicaste y por qué.
+
+**Concepto aplicado**
+
+* Regresé al concepto del **péndulo**. La idea era que en la parte inferior del canvas estuviera un péndulo que al entrar en contacto con las partículas que se generaban gracias al emitter, las pintara de color uva. 
+
+Creé una clase pendulum.js para que contuviera al péndulo simple y en esta misma clase hay una función checkCollision() que analiza si la partícula entra en contacto con el bob y si es así lo pinta del color indicado.
+
+**¿Por qué?**
+
+* Quería aplicar el concepto de resorte pero me di cuenta que no era óptimo para este ejemplo, incluso si era un resorte simple. Así que decidí replantear el concepto y fue allí donde me percaté que el movimiento natural de un péndulo podría sin mucho esfuerzo crear una buena interacción con las partículas.
 ______________________________________________________________________________________________________________________________________
 
 ✅ 4. Analiza el ejemplo 4.6: a Particle System with Forces.
