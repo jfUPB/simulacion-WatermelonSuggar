@@ -1,6 +1,6 @@
 **SIMULACIONES A ANALIZAR:**
 
-✅ 1. Revisa detalladamente el ejemplo 4.2: an [Array of Particles](https://natureofcode.com/particles/#example-42-an-array-of-particles).
+## 1. Revisa detalladamente el ejemplo 4.2: an [Array of Particles](https://natureofcode.com/particles/#example-42-an-array-of-particles).
 
 **Código original**
 
@@ -21,6 +21,102 @@
 ![image](https://github.com/user-attachments/assets/4a0d0951-2e23-4567-9972-ef2786ccd7a6)
 
 [Simulación aquí](https://editor.p5js.org/WatermelonSuggar/sketches/xASgHG0km)
+
+**particle.js**
+
+```js
+class Particle {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.acceleration = createVector(0, 0);
+    this.velocity = createVector(random(-1, 1), random(-1, 0));
+    this.lifespan = 255.0;
+  }
+
+  run() {
+    let gravity = createVector(0, 0.05);
+    this.applyForce(gravity);
+    this.applyAttraction(mouseX, mouseY);
+    this.update();
+    this.show();
+  }
+
+  applyForce(force) {
+    this.acceleration.add(force);
+  }
+
+  applyAttraction(targetX, targetY) {
+    let target = createVector(targetX, targetY);
+    let force = p5.Vector.sub(target, this.position);
+    let distance = force.mag();
+    distance = constrain(distance, 5, 80);
+    force.normalize();
+    let strength = 8 / distance;
+    force.mult(strength);
+    this.applyForce(force);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.lifespan -= 2;
+    this.acceleration.mult(0);
+  }
+
+  show() {
+    stroke(0, this.lifespan);
+    strokeWeight(2);
+    fill(127, this.lifespan);
+    circle(this.position.x, this.position.y, 8);
+  }
+
+  isDead() {
+    return this.lifespan <= 0;
+  }
+}
+
+
+```
+**sketch.js**
+
+```js
+let particles = [];
+const MAX_PARTICLES = 200;
+const MIN_PARTICLES = 50; // Para evitar que se queden sin partículas
+
+function setup() {
+  createCanvas(640, 240);
+}
+
+function draw() {
+  background(255);
+
+  // Calculamos la velocidad del mouse
+  let mouseSpeed = dist(mouseX, mouseY, pmouseX, pmouseY);
+  
+  // Mapeamos la velocidad del mouse a la cantidad de partículas creadas
+  let particlesToAdd = map(mouseSpeed, 0, 50, 1, 5); // De 1 a 5 partículas
+
+  // Agregar partículas según la velocidad del mouse
+  if (particles.length < MAX_PARTICLES) {
+    for (let i = 0; i < particlesToAdd; i++) {
+      particles.push(new Particle(mouseX, mouseY));
+    }
+  }
+
+  // Recorrer partículas y actualizar
+  for (let i = particles.length - 1; i >= 0; i--) {
+    let particle = particles[i];
+    particle.run();
+
+    // Solo eliminar si hay suficientes partículas para mantener la fluidez
+    if (particle.isDead() && particles.length > MIN_PARTICLES) {
+      particles.splice(i, 1);
+    }
+  }
+}
+
+```
 
 > 🌳Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste.
 
@@ -60,7 +156,7 @@
 _________________________________________________________________________________
 
 
-✅ 2. Analiza el ejemplo 4.4: a [System of Systems.](https://natureofcode.com/particles/#example-44-a-system-of-systems)
+## 2. Analiza el ejemplo 4.4: a [System of Systems.](https://natureofcode.com/particles/#example-44-a-system-of-systems)
 
 **Código original**
 
@@ -88,6 +184,133 @@ ________________________________________________________________________________
 
 ![image](https://github.com/user-attachments/assets/b14fd425-7502-4c00-b33e-dd7da52ac494)
 
+**emitter.js**
+
+```js
+class Emitter {
+  constructor(x, y) {
+    this.origin = createVector(x, y);
+    this.particles = [];
+  }
+
+  addParticle() {
+    this.particles.push(new Particle(this.origin.x, this.origin.y));
+  }
+
+  run(gravity, time) {
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      let p = this.particles[i];
+      p.run(gravity, time);
+      if (p.isDead()) {
+        this.particles.splice(i, 1);
+      }
+    }
+  }
+}
+
+```
+
+**particle.js**
+
+```js
+class Particle {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.acceleration = createVector(0, 0);
+    this.velocity = createVector(random(-1, 1), random(-1, 0));
+    this.lifespan = 255.0;
+
+    // Tamaño usando vuelo de Lévy
+    this.size = this.levySize();
+
+    // Offsets para Perlin Noise en color
+    this.colorOffsetR = random(1000);
+    this.colorOffsetG = random(1000);
+    this.colorOffsetB = random(1000);
+  }
+
+  run(gravity, time) {
+    this.applyForce(gravity);
+    this.levyFlight();
+    this.update();
+    this.show(time);
+  }
+
+  applyForce(force) {
+    this.acceleration.add(force);
+  }
+
+  levyFlight() {
+    if (random() < 0.1) {
+      let angle = random(TWO_PI);
+      let step = pow(random(1), -1.5); // Vuelo de Lévy
+      this.velocity.add(p5.Vector.fromAngle(angle).mult(step));
+    }
+  }
+
+  levySize() {
+    // Generamos un tamaño usando vuelo de Lévy
+    let step = pow(random(1), -1.5) * 5; // Factor para escalar el tamaño
+    return constrain(step, 5, 20); // Limitamos a un rango razonable
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.lifespan -= 2;
+    this.acceleration.mult(0);
+  }
+
+  show(time) {
+    let r = map(noise(this.colorOffsetR + time * 0.01), 0, 1, 50, 255);
+    let g = map(noise(this.colorOffsetG + time * 0.01), 0, 1, 50, 255);
+    let b = map(noise(this.colorOffsetB + time * 0.01), 0, 1, 50, 255);
+
+    stroke(0, this.lifespan);
+    strokeWeight(2);
+    fill(r, g, b, this.lifespan);
+    circle(this.position.x, this.position.y, this.size);
+  }
+
+  isDead() {
+    return this.lifespan < 0.0 || this.position.y > height || this.position.x < 0 || this.position.x > width;
+  }
+}
+```
+
+**sketch.js**
+
+```js
+let emitters = [];
+let gravity;
+let time = 0; // Para variar el ruido de Perlin con el tiempo
+
+function setup() {
+  createCanvas(640, 240);
+  gravity = createVector(0, 0.05);
+}
+
+function draw() {
+  background(255);
+  time += 1;
+
+  for (let emitter of emitters) {
+    emitter.run(gravity, time);
+    if (mouseIsPressed) { // Solo genera si el mouse está presionado
+      emitter.addParticle();
+    }
+  }
+}
+
+function mousePressed() {
+  emitters = []; // Elimina todos los emitters anteriores
+  let emitter = new Emitter(mouseX, mouseY);
+  emitters.push(emitter);
+  for (let i = 0; i < 10; i++) {
+    emitter.addParticle();
+  }
+}
+```
 
 > 🌳Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste.
 
@@ -116,7 +339,7 @@ ________________________________________________________________________________
 
 ______________________________________________________________________________________________________________________________________
 
-✅ 3. Analiza el ejemplo 4.5: [a Particle System with Inheritance and Polymorphism.](https://natureofcode.com/particles/#example-45-a-particle-system-with-inheritance-and-polymorphism)
+## 3. Analiza el ejemplo 4.5: [a Particle System with Inheritance and Polymorphism.](https://natureofcode.com/particles/#example-45-a-particle-system-with-inheritance-and-polymorphism)
 
 **Código original**
 
@@ -140,7 +363,171 @@ ________________________________________________________________________________
 
 ![image](https://github.com/user-attachments/assets/f787440f-e03b-4327-8681-52f2743e6ae9)
 
+**confetti.js**
 
+```js
+class Confetti extends Particle {
+  show() {
+    let angle = map(this.position.x, 0, width, 0, TWO_PI * 2);
+    rectMode(CENTER);
+    fill(this.painted ? color(128, 0, 128) : color(127, this.lifespan));
+    stroke(0, this.lifespan);
+    push();
+    translate(this.position.x, this.position.y);
+    rotate(angle);
+    square(0, 0, 12);
+    pop();
+  }
+}
+```
+
+**emitter.js**
+
+```js
+class Emitter {
+  constructor(x, y) {
+    this.origin = createVector(x, y);
+    this.particles = [];
+  }
+
+  addParticle() {
+    let r = random(1);
+    if (r < 0.5) {
+      this.particles.push(new Particle(this.origin.x, this.origin.y));
+    } else {
+      this.particles.push(new Confetti(this.origin.x, this.origin.y));
+    }
+  }
+
+  run() {
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      let p = this.particles[i];
+      p.run();
+      if (p.isDead()) {
+        this.particles.splice(i, 1);
+      }
+    }
+  }
+
+  getParticles() {
+    return this.particles;
+  }
+}
+
+```
+
+**particle.js**
+
+```js
+class Particle {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.velocity = createVector(random(-1, 1), random(-1, 0));
+    this.acceleration = createVector(0, 0);
+    this.lifespan = 255;
+    this.size = 8;
+    this.painted = false;
+  }
+
+  run() {
+    this.applyForce(createVector(0, 0.05));
+    this.update();
+    this.show();
+  }
+
+  applyForce(force) {
+    this.acceleration.add(force);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.lifespan -= 2;
+    this.acceleration.mult(0);
+  }
+
+  show() {
+    stroke(0, this.lifespan);
+    fill(this.painted ? color(128, 0, 128) : color(127, this.lifespan));
+    circle(this.position.x, this.position.y, this.size);
+  }
+
+  isDead() {
+    return this.lifespan < 0;
+  }
+}
+
+```
+
+**pendulum.js**
+
+```js
+class Pendulum {
+  constructor(x, y, r) {
+    this.pivot = createVector(x, y);
+    this.bob = createVector();
+    this.r = r;
+    this.angle = PI / 4;
+
+    this.angleVelocity = 0.0;
+    this.angleAcceleration = 0.0;
+    this.damping = 0.995; // Amortiguación
+    this.ballr = 20; // Radio del bob
+    this.dragging = false;
+  }
+
+  update() {
+    if (!this.dragging) {
+      let gravity = 0.4;
+      this.angleAcceleration = (-gravity / this.r) * sin(this.angle);
+      this.angleVelocity += this.angleAcceleration;
+      this.angle += this.angleVelocity;
+      this.angleVelocity *= this.damping;
+    }
+  }
+
+  show() {
+    this.bob.set(this.r * sin(this.angle), this.r * cos(this.angle));
+    this.bob.add(this.pivot);
+
+    stroke(0);
+    strokeWeight(2);
+    line(this.pivot.x, this.pivot.y, this.bob.x, this.bob.y);
+    fill(128, 0, 128);
+    noStroke();
+    circle(this.bob.x, this.bob.y, this.ballr * 2);
+  }
+
+  clicked(mx, my) {
+    let d = dist(mx, my, this.bob.x, this.bob.y);
+    if (d < this.ballr) {
+      this.dragging = true;
+    }
+  }
+
+  stopDragging() {
+    this.angleVelocity = 0;
+    this.dragging = false;
+  }
+
+  drag() {
+    if (this.dragging) {
+      let diff = p5.Vector.sub(this.pivot, createVector(mouseX, mouseY));
+      this.angle = atan2(-diff.y, diff.x) - PI / 2;
+    }
+  }
+
+  checkCollision(particles) {
+    for (let p of particles) {
+      let d = dist(this.bob.x, this.bob.y, p.position.x, p.position.y);
+      if (d < this.ballr + p.size / 2) {
+        p.painted = true;
+      }
+    }
+  }
+}
+
+```
 
 > 🌳Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste.
 
@@ -159,7 +546,11 @@ Creé una clase pendulum.js para que contuviera al péndulo simple y en esta mis
 * Quería aplicar el concepto de resorte pero me di cuenta que no era óptimo para este ejemplo, incluso si era un resorte simple. Así que decidí replantear el concepto y fue allí donde me percaté que el movimiento natural de un péndulo podría sin mucho esfuerzo crear una buena interacción con las partículas.
 ______________________________________________________________________________________________________________________________________
 
-✅ 4. Analiza el ejemplo 4.6: a Particle System with Forces.
+✅ 4. Analiza el ejemplo 4.6: [a Particle System with Forces](https://natureofcode.com/particles/#example-46-a-particle-system-with-forcescha).
+
+> ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?
+
+**Código original**
 
 > ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?
 
