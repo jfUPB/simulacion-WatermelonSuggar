@@ -4,7 +4,7 @@
 
 **Código original**
 
-> ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?
+> ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria?
 
 * **Asignación de memoria**
 
@@ -160,7 +160,7 @@ ________________________________________________________________________________
 
 **Código original**
 
-> ¿Cómo se está gestionando la creación y la desaparción de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?
+> ¿Cómo se está gestionando la creación y la desaparción de las partículas y cómo se gestiona la memoria?
 
 * Creación:
   * Cada vez que se crea un Emisor (Emitter), se inicializa en una posición específica.
@@ -344,7 +344,7 @@ ________________________________________________________________________________
 
 **Código original**
 
-> ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?
+> ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria?
 
 * Creación:
   * En cada frame (draw() en sketch.js), se llama a emitter.addParticle(), lo que añade una nueva partícula al sistema.
@@ -619,7 +619,7 @@ ________________________________________________________________________________
 
 ## 4. Analiza el ejemplo 4.6: [a Particle System with Forces](https://natureofcode.com/particles/#example-46-a-particle-system-with-forces).
 
-> ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?
+> ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria?
 
 **Código original**
 
@@ -780,8 +780,179 @@ Esto permite una simulación más realista, donde la mayoría de las partículas
 
 ______________________________________________________________________________________________________________________________________
 
-✅ 5. Analiza el ejemplo 4.7: a Particle System with a Repeller.
+## 5. Analiza el ejemplo 4.7: [a Particle System with a Repeller](https://natureofcode.com/particles/#example-47-a-particle-system-with-a-repeller).
 
-> ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?
+**Código original**
+
+> ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria?
+
+* Creación:
+  *  En cada fotograma (draw()), se llama emitter.addParticle(), que crea una nueva partícula en la posición del emisor.
+  *  Esto significa que una nueva partícula se añade al arreglo particles en cada frame, manteniendo el sistema en constante generación.
+  *  A todas las partículas vivas se les aplica una fuerza de gravedad constante hacia abajo. Una fuerza de repulsión desde el Repeller, que varía dependiendo de la distancia a cada partícula.
+
+* Desaparición y control de memoria:
+  * En el método run() de Emitter, se recorre el arreglo particles de atrás hacia adelante.
+  * Cada partícula tiene un atributo lifespan, que disminuye con el tiempo en update(). Cuando este valor cae por debajo de 0, se considera "muerta".
+
+**Código modificado**
+
+[Simulación aquí](https://editor.p5js.org/WatermelonSuggar/sketches/CXaQZzGTn)
+
+![image](https://github.com/user-attachments/assets/cc1211ab-1182-4a0b-b03c-7d1d683bd524)
+
+**emitter.js**
+
+```js
+class Emitter {
+  constructor(x, y) {
+    this.origin = createVector(x, y);
+    this.particles = [];
+    this.timer = 0;
+  }
+
+  addParticle() {
+    this.timer++;
+    if (this.timer % 100 === 0) {
+      this.particles.push(new VectorParticle(this.origin.x, this.origin.y));
+    } else {
+      this.particles.push(new Particle(this.origin.x, this.origin.y));
+    }
+  }
+
+  applyForce(force) {
+    for (let particle of this.particles) {
+      particle.applyForce(force);
+    }
+  }
+
+  applyRepeller(repeller) {
+    for (let particle of this.particles) {
+      let force = repeller.repel(particle);
+      particle.applyForce(force);
+    }
+  }
+
+  applyVectorRepel() {
+    let vectors = this.particles.filter(p => p instanceof VectorParticle);
+    for (let vector of vectors) {
+      for (let particle of this.particles) {
+        if (particle !== vector) {
+          let repelForce = vector.repel(particle);
+          particle.applyForce(repelForce);
+        }
+      }
+    }
+  }
+
+  run() {
+    this.applyVectorRepel();
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      const particle = this.particles[i];
+      particle.run();
+      if (particle.isDead()) {
+        this.particles.splice(i, 1);
+      }
+    }
+  }
+}
+
+```
+**particle.js**
+
+```js
+// The Nature of Code
+// Daniel Shiffman
+// http://natureofcode.com
+
+// Simple Particle System
+
+// A simple Particle class
+
+class Particle {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.velocity = createVector(random(-1, 1), random(-1, 0));
+    this.acceleration = createVector(0, 0);
+    this.lifespan = 255.0;
+  }
+
+  run() {
+    this.update();
+    this.show();
+  }
+
+  applyForce(f) {
+    this.acceleration.add(f);
+  }
+
+  // Method to update position
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.lifespan -= 2;
+    this.acceleration.mult(0);
+  }
+
+  // Method to display
+  show() {
+    stroke(0, this.lifespan);
+    strokeWeight(2);
+    fill(127, this.lifespan);
+    circle(this.position.x, this.position.y, 8);
+  }
+
+  // Is the particle still useful?
+  isDead() {
+    return this.lifespan < 0.0;
+  }
+}
+
+```
+**sketch.js**
+
+```js
+let emitter;
+
+
+function setup() {
+  createCanvas(640, 240);
+  emitter = new Emitter(width / 2, 60);
+  
+}
+
+function draw() {
+  background(255);
+  emitter.addParticle();
+
+  let gravity = createVector(0, 0.1);
+  emitter.applyForce(gravity);
+
+  emitter.run();
+
+}
+```
+> 🌳Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste.
+
+* No cambié nada de la generación, eliminación y gestión de partículas en la memoria.
+
+> 🌳Explica qué concepto aplicaste, cómo lo aplicaste y por qué.
+
+* Apliqué una distribución gaussiana para generar variaciones suaves y naturales en dos aspectos del sistema de partículas: la posición inicial de las partículas y el color 
+
+**Concepto aplicado y cómo lo apliqué**
+
+* Vectores que representan fuerzas como la gravedad y la repulsión. También apliqué el motion 101 porque cada partícula tiene una posición, una velocidad y una aceleración
+  
+* Partículas especiales con repulsión, inspiradas en la ley de Coulomb que repelen a las demás usando una fuerza basada en la distancia.
+
+**Por qué**
+
+* Quería explorar con los vectores como entes de repulsión para ver cómo interactuaba una partícula especial con las normales.
+
+
+
+
+
 
 _____________________________________________________________________________________________________________________________________
