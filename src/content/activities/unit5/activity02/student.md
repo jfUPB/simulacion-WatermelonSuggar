@@ -529,6 +529,76 @@ class Pendulum {
 
 ```
 
+**sketch.js**
+
+```js
+class Pendulum {
+  constructor(x, y, r) {
+    this.pivot = createVector(x, y);
+    this.bob = createVector();
+    this.r = r;
+    this.angle = PI / 4;
+
+    this.angleVelocity = 0.0;
+    this.angleAcceleration = 0.0;
+    this.damping = 0.995; // Amortiguación
+    this.ballr = 20; // Radio del bob
+    this.dragging = false;
+  }
+
+  update() {
+    if (!this.dragging) {
+      let gravity = 0.4;
+      this.angleAcceleration = (-gravity / this.r) * sin(this.angle);
+      this.angleVelocity += this.angleAcceleration;
+      this.angle += this.angleVelocity;
+      this.angleVelocity *= this.damping;
+    }
+  }
+
+  show() {
+    this.bob.set(this.r * sin(this.angle), this.r * cos(this.angle));
+    this.bob.add(this.pivot);
+
+    stroke(0);
+    strokeWeight(2);
+    line(this.pivot.x, this.pivot.y, this.bob.x, this.bob.y);
+    fill(128, 0, 128);
+    noStroke();
+    circle(this.bob.x, this.bob.y, this.ballr * 2);
+  }
+
+  clicked(mx, my) {
+    let d = dist(mx, my, this.bob.x, this.bob.y);
+    if (d < this.ballr) {
+      this.dragging = true;
+    }
+  }
+
+  stopDragging() {
+    this.angleVelocity = 0;
+    this.dragging = false;
+  }
+
+  drag() {
+    if (this.dragging) {
+      let diff = p5.Vector.sub(this.pivot, createVector(mouseX, mouseY));
+      this.angle = atan2(-diff.y, diff.x) - PI / 2;
+    }
+  }
+
+  checkCollision(particles) {
+    for (let p of particles) {
+      let d = dist(this.bob.x, this.bob.y, p.position.x, p.position.y);
+      if (d < this.ballr + p.size / 2) {
+        p.painted = true;
+      }
+    }
+  }
+}
+
+```
+
 > 🌳Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste.
 
 * No realicé ninguna modificación en cuanto a la generación de partículas porque quería realizar los cambios desde la integración de un nuevo concepto visto en unidades anteriores. Así que las partículas se siguen generando gracias al emitter, siguen estando las posibilidades 50/50 de que la partícula sea un cuadrado (cofetti.js) o un círculo en (particle.js). Y se siguen desapareciendo si su ciclo de vida es menor a 0, para evitar saturar la memoria.
@@ -546,13 +616,25 @@ Creé una clase pendulum.js para que contuviera al péndulo simple y en esta mis
 * Quería aplicar el concepto de resorte pero me di cuenta que no era óptimo para este ejemplo, incluso si era un resorte simple. Así que decidí replantear el concepto y fue allí donde me percaté que el movimiento natural de un péndulo podría sin mucho esfuerzo crear una buena interacción con las partículas.
 ______________________________________________________________________________________________________________________________________
 
-✅ 4. Analiza el ejemplo 4.6: [a Particle System with Forces](https://natureofcode.com/particles/#example-46-a-particle-system-with-forcescha).
+## 4. Analiza el ejemplo 4.6: [a Particle System with Forces](https://natureofcode.com/particles/#example-46-a-particle-system-with-forces).
 
 > ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?
 
 **Código original**
 
 > ¿Cómo se está gestionando la creación y la desaparición de las partículas y cómo se gestiona la memoria en cada una de las simulaciones?
+
+* Creación: Sigue funcionando con el ciclo **draw()**, el **emitter()** y el **addParticle()** y el número de partículas crece indefinidamente hasta que son eliminadas.
+
+  * Se instancia un nuevo objeto Particle, se almacena en el array particles[] dentro del Emitter.
+  * Cada partícula tiene una posición inicial (this.origin.x, this.origin.y).
+  * Se crea con una velocidad inicial aleatoria (random(-1, 1) en X y random(-2, 0) en Y).
+
+* Gestión de la memoria y eliminación de partículas:
+  * Cada partícula tiene una propiedad lifespan (inicialmente 255) que disminuye con el tiempo en update().
+  * Cuando lifespan < 0, la partícula es considerada "muerta". Para eliminarla, en Emitter.run() se usa un bucle inverso (for de atrás hacia adelante) para recorrer el array particles[].
+  * Si particle.isDead() retorna true (cuando lifespan < 0), la partícula se elimina con splice(i, 1).
+  * Se recorre el array de forma inversa para evitar problemas con los índices al eliminar elementos.
 
 ______________________________________________________________________________________________________________________________________
 
