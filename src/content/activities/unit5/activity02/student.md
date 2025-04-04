@@ -138,7 +138,7 @@ function draw() {
 **Concepto aplicado**
 *  Apliqué una **fuerza de atracción inversamente proporcional a la distancia**, es decir que, si la partícula está lejos del mouse, la atracción es más débil. Si la partícula está cerca del mouse, la atracción es más fuerte.
 
-**Cómo lo apliqué**
+**Concepto aplicado y cómo lo apliqué**
 
 * Calculé la dirección hacia el mouse, para cada partícula, obtuve un vector que apunta desde su posición hasta el mouse.
 * Medí la distancia entre la partícula y el mouse, esto me permite ajustar la intensidad de la atracción.
@@ -324,7 +324,8 @@ function mousePressed() {
 
 > 🌳Explica qué concepto aplicaste, cómo lo aplicaste y por qué.
 
-**Concepto aplicado**
+**Concepto aplicado y cómo lo apliqué**
+
 *  Apliqué distintas distribuciones:
     *  **Ruido de Perlin para el color** ya que cada partícula tiene valores únicos para R, G y B, que se generan usando Perlin Noise. Estos valores cambian con el tiempo para crear transiciones de color más suaves y orgánicas.
     *  **Distribución normal para la velocidad inicial,**  lugar de asignar velocidades completamente aleatorias, utilicé una distribución normal para que la mayoría de las partículas tengan velocidades cercanas a un valor promedio, con algunas pocas siendo mucho más rápidas o lentas.
@@ -605,7 +606,7 @@ class Pendulum {
 
 > 🌳Explica qué concepto aplicaste, cómo lo aplicaste y por qué.
 
-**Concepto aplicado**
+**Concepto aplicado y cómo lo apliqué**
 
 * Regresé al concepto del **péndulo**. La idea era que en la parte inferior del canvas estuviera un péndulo que al entrar en contacto con las partículas que se generaban gracias al emitter, las pintara de color uva. 
 
@@ -635,6 +636,147 @@ ________________________________________________________________________________
   * Cuando lifespan < 0, la partícula es considerada "muerta". Para eliminarla, en Emitter.run() se usa un bucle inverso (for de atrás hacia adelante) para recorrer el array particles[].
   * Si particle.isDead() retorna true (cuando lifespan < 0), la partícula se elimina con splice(i, 1).
   * Se recorre el array de forma inversa para evitar problemas con los índices al eliminar elementos.
+
+**Código modificado**
+
+![image](https://github.com/user-attachments/assets/ea0011f0-cd66-46c2-a380-e18183c48302)
+
+[Simulación aquí](https://editor.p5js.org/WatermelonSuggar/sketches/NUSzpJyE7)
+
+**emitter.js**
+
+```js
+class Emitter {
+  constructor(x, y, inverted = false) {
+    this.origin = createVector(x, y);
+    this.particles = [];
+    this.inverted = inverted; // Indica si es el emisor reflejado
+  }
+
+  addParticle() {
+    let xOffset = randomGaussian(0, 40);
+    let yOffset = randomGaussian(0, 25);
+
+    let x = this.origin.x + xOffset;
+    let y = this.origin.y + (this.inverted ? -yOffset : yOffset); // Invertimos para el reflejado
+
+    this.particles.push(new Particle(x, y, this.inverted));
+  }
+
+  applyForce(force) {
+    for (let particle of this.particles) {
+      particle.applyForce(force);
+    }
+  }
+
+  run() {
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      const particle = this.particles[i];
+      particle.run();
+      if (particle.isDead()) {
+        this.particles.splice(i, 1);
+      }
+    }
+  }
+}
+```
+
+**particle.js**
+
+```js
+class Particle {
+  constructor(x, y, inverted = false) {
+    this.position = createVector(x, y);
+    this.acceleration = createVector(0, 0.0);
+    this.velocity = createVector(random(-1, 1), random(-2, 0));
+    if (inverted) this.velocity.y *= -1; // Invierte el movimiento si es el reflejado
+    this.lifespan = 255.0;
+    this.mass = 1;
+
+    this.r = constrain(randomGaussian(map(x, 0, width, 50, 255), 80), 0, 255);
+    this.g = constrain(randomGaussian(map(y, 0, height, 50, 255), 80), 0, 255);
+    this.b = constrain(randomGaussian(150, 80), 0, 255);
+  }
+
+  run() {
+    this.update();
+    this.show();
+  }
+
+  applyForce(force) {
+    let f = force.copy();
+    f.div(this.mass);
+    this.acceleration.add(f);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
+    this.lifespan -= 2.0;
+  }
+
+  show() {
+    stroke(0, this.lifespan);
+    strokeWeight(2);
+    fill(this.r, this.g, this.b, this.lifespan);
+    circle(this.position.x, this.position.y, 8);
+  }
+
+  isDead() {
+    return this.lifespan < 0.0;
+  }
+}
+```
+**sketch.js**
+
+```js
+let emitter, emitter2;
+
+function setup() {
+  createCanvas(640, 640);
+  emitter = new Emitter(width / 2, 50); // Emisor original
+  emitter2 = new Emitter(width / 2, height - 50, true); // Emisor reflejado
+}
+
+function draw() {
+  background(255, 30);
+
+  let gravity = createVector(0, 0.1);
+  let antiGravity = createVector(0, -0.1); // Para el reflejado
+
+  emitter.applyForce(gravity);
+  emitter2.applyForce(antiGravity); // Aplica fuerza hacia arriba
+
+  emitter.addParticle();
+  emitter2.addParticle();
+
+  emitter.run();
+  emitter2.run();
+}
+```
+> 🌳Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste.
+
+* Creación de partículas:
+  * Tengo dos sistemas de partícula y en cada cuadro draw() se crean nuevas partículas.
+  * emitter.addParticle() agrega una nueva partícula al sistema original y emitter2.addParticle() agrega las partículas al sistema reflejado.
+
+* Eliminación:
+  * Cada partícula tiene una vida útil, la variable lifespan empieza en 255.0 y se reduce en cada frame.
+  * Se recorre el array de partículas al revés para evitar problemas al eliminar elementos dentro del bucle.
+
+> 🌳Explica qué concepto aplicaste, cómo lo aplicaste y por qué.
+
+**Concepto aplicado y cómo lo apliqué**
+
+* En esta simulación, utilicé la distribución normal (o gaussiana) para generar la posición inicial de las partículas y su color. Este tipo de distribución es útil cuando queremos que los valores generados se concentren alrededor de una media, con una probabilidad decreciente a medida que nos alejamos de ella.
+
+**¿Por qué?**
+
+* Quería simular una cascada y variar un poco la posición en la que se generaban de manera que no fueran muy abruptos los cambios y me pareció divertido que pudieran reflejarse y caer una sobre la otyra pero con distintos colores según la posición. Para la posición, usé randomGaussian() para que las partículas se concentren cerca del emisor con una dispersión natural. Para el color, usé la misma función para generar variaciones suaves en los valores RGB en función de la posición.
+
+Esto permite una simulación más realista, donde la mayoría de las partículas aparecen cerca del origen y solo algunas se alejan, evitando distribuciones artificiales.
+
 
 ______________________________________________________________________________________________________________________________________
 
