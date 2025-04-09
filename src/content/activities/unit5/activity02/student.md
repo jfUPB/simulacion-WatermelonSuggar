@@ -533,70 +533,35 @@ class Pendulum {
 **sketch.js**
 
 ```js
-class Pendulum {
-  constructor(x, y, r) {
-    this.pivot = createVector(x, y);
-    this.bob = createVector();
-    this.r = r;
-    this.angle = PI / 4;
+let emitter;
+let pendulum;
 
-    this.angleVelocity = 0.0;
-    this.angleAcceleration = 0.0;
-    this.damping = 0.995; // Amortiguación
-    this.ballr = 20; // Radio del bob
-    this.dragging = false;
-  }
-
-  update() {
-    if (!this.dragging) {
-      let gravity = 0.4;
-      this.angleAcceleration = (-gravity / this.r) * sin(this.angle);
-      this.angleVelocity += this.angleAcceleration;
-      this.angle += this.angleVelocity;
-      this.angleVelocity *= this.damping;
-    }
-  }
-
-  show() {
-    this.bob.set(this.r * sin(this.angle), this.r * cos(this.angle));
-    this.bob.add(this.pivot);
-
-    stroke(0);
-    strokeWeight(2);
-    line(this.pivot.x, this.pivot.y, this.bob.x, this.bob.y);
-    fill(128, 0, 128);
-    noStroke();
-    circle(this.bob.x, this.bob.y, this.ballr * 2);
-  }
-
-  clicked(mx, my) {
-    let d = dist(mx, my, this.bob.x, this.bob.y);
-    if (d < this.ballr) {
-      this.dragging = true;
-    }
-  }
-
-  stopDragging() {
-    this.angleVelocity = 0;
-    this.dragging = false;
-  }
-
-  drag() {
-    if (this.dragging) {
-      let diff = p5.Vector.sub(this.pivot, createVector(mouseX, mouseY));
-      this.angle = atan2(-diff.y, diff.x) - PI / 2;
-    }
-  }
-
-  checkCollision(particles) {
-    for (let p of particles) {
-      let d = dist(this.bob.x, this.bob.y, p.position.x, p.position.y);
-      if (d < this.ballr + p.size / 2) {
-        p.painted = true;
-      }
-    }
-  }
+function setup() {
+  createCanvas(640, 240);
+  emitter = new Emitter(width / 2, 20);
+  pendulum = new Pendulum(width / 2, 20, 150);
 }
+
+function draw() {
+  background(255);
+
+  emitter.addParticle();
+  emitter.run();
+
+  pendulum.update();
+  pendulum.drag();
+  pendulum.checkCollision(emitter.getParticles()); // Detectar colisión con partículas
+  pendulum.show();
+}
+
+function mousePressed() {
+  pendulum.clicked(mouseX, mouseY);
+}
+
+function mouseReleased() {
+  pendulum.stopDragging();
+}
+
 
 ```
 
