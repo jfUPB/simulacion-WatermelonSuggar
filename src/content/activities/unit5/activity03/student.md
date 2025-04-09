@@ -23,7 +23,8 @@
 
 > * Me di cuenta que la idea del rayo no me convencía tanto y las partículas sí se estan transformando en estrellas pero no había tanto dinamismo así que pensé que podía dejar también la funcionalidad del cambio de color para que fueran las probabilidades las que determinen si se cambia de color o de forma.
 > * Para la vista es muy cansado tener el fondo cambiando ligeramente con la distribución gausseana así que mejor me voy por un solo color.
-> * Quiero que sea una lluvia de partículas que se generarán en la parte superior de la pantalla.
+> * Quiero que sea una lluvia de partículas que se generarán en la parte superior de la pantalla
+> * El nuevo bob será una luna :)
 
 Debes utilizar los conceptos de herencia y polimorfismo que revisaste en la fase de investigación.
 Debes utilizar al menos un concepto de cada una de las unidades anteriores: 4 conceptos.
