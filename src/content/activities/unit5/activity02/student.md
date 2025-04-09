@@ -360,7 +360,7 @@ ________________________________________________________________________________
 
 **Código modificado**
 
-[Simulación modificada aquí](https://editor.p5js.org/WatermelonSuggar/sketches/MD0prJkgp)
+[Simulación modificada aquí](https://editor.p5js.org/WatermelonSuggar/sketches/i3wXsccLr)
 
 ![image](https://github.com/user-attachments/assets/f787440f-e03b-4327-8681-52f2743e6ae9)
 
