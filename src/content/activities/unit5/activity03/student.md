@@ -103,7 +103,7 @@ class Emitter {
   }
 
   addParticle() {
-    let x = random(width);
+    let x = width / 2 + randomLevyOffset(80); // Posición horizontal más errática
     let y = random(0, 10);
     if (random(1) < 0.5) {
       this.particles.push(new Particle(x, y));
@@ -126,6 +126,7 @@ class Emitter {
     return this.particles;
   }
 }
+
 ```
 **particle.js**
 
@@ -133,7 +134,8 @@ class Emitter {
 class Particle {
   constructor(x, y) {
     this.position = createVector(x, y);
-    this.velocity = createVector(random(-1, 1), random(1, 3));
+    this.velocity = randomLevyVector(2); // Movimiento inicial usando Lévy
+    this.velocity.y = abs(this.velocity.y); // Asegura que se muevan hacia abajo
     this.acceleration = createVector(0, 0);
     this.lifespan = 255;
     this.size = 8;
@@ -167,7 +169,6 @@ class Particle {
     return this.lifespan < 0;
   }
 }
-
 ```
 **pendulum.js**
 
@@ -257,9 +258,9 @@ function setup() {
 }
 
 function draw() {
-  background(3, 23, 58 );
+  background(3, 23, 58);
 
-  // Mayor cantidad de partículas por frame
+  // Emitimos más partículas con posición X basada en Lévy flight
   for (let i = 0; i < 2; i++) {
     emitter.addParticle();
   }
@@ -278,10 +279,37 @@ function mousePressed() {
 
 function mouseReleased() {
   pendulum.stopDragging();
-
 }
+
+// ========== FUNCIONES LÉVY FLIGHT ==========
+
+function levyFlight(scale = 1) {
+  let r = random(1);
+  return scale / pow(r, 1 / 3); // Exponente ajustable para la distribución
+}
+
+function randomLevyVector(scale = 1) {
+  let angle = random(TWO_PI);
+  let mag = levyFlight(scale);
+  return p5.Vector.fromAngle(angle).mult(mag);
+}
+
+function randomLevyOffset(scale = 100) {
+  return (random() < 0.5 ? -1 : 1) * levyFlight(scale);
+}
+
 ```
 
+### Conceptos aplicados
 
-Qué concepto de cada unidad aplicaste, cómo lo aplicaste y por qué.
-Una captura de pantalla con una imagen de tu obra.
+* **Unidad 1:**
+  * Distribución no uniforme (Vuelo de Lévy): Para que la trayectoria de las partículas no sea tan predecible, apliqué el concepto en la posición inicial de las partículas y en la magnitud del vector de velocidad inicial.
+
+* **Unidad 2:**
+  * Vectores: el péndulo y los cálculos de la colisión de partículas emplean vectores y todo el sistema de movimiento usa esta función para poder dirigir a las partículas.
+
+* **Unidad 3:**
+  * Fuerzas: Estoy aplicando la fuerza la gravedad y sumatoria de fuerzas en el funcionamiento de las partículas para que su caída tenga sentido y simule una lluvia normal.
+    
+* **Unidad 4:**
+  * El péndulo y las funciones sinusoidales: El programa implementa un péndulo simple y calcula su aceleración angular, velocidad y posición usando las leyes del movimiento angular. Se usan funciones como sin() y cos() para la posición del péndulo (bob) y el giro de las partículas (confetti) con rotate.
