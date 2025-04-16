@@ -1,0 +1,27 @@
+✅ 1. En lo que llevas de la carrera has utilizado la programación orientada a objetos en varios proyectos. Tal vez usaste el concepto de polimorfismo sin entender completamente qué significa. Luego de realizar esta unidad ¿Consideras que entiendes mejor este concepto? ¿Por qué si o por qué no?
+
+* Sí, muchas veces empleaba estos objetos en proyectos relacionados con videojuegos y me costaba comprenderlos con códigos de Unity por la dificultad de realcionarlo a mis intereses o comprender los códigos largos y complejos, sin embargo, en esta unidad pude explorar de manera visual e interactiva integrando conceptos que ya había aprendido de la misma manera. Así que sí, ya comprendo la relevancia de crear clases que se puedan heredar y también la importancia de aplicar polimorfismo para que objetos con cualidades compartidad pero a su vez diferentes puedan convivir juntos reutilizando funciones. 
+
+✅ 2. ¿Qué partes de esta unidad te resultaron más fáciles? ¿Por qué?
+
+* Hacer la actividad 3 me resultó fácil porque ya había explorado bastante con ejemplos anteriores, no todo fue fácil. Pensar en qué conceptos integrar o cómo aplicarlos también me tomó mucho tiempo pero pensar en el concepto lo hizo más interesante y llevadero el proceso. Pienso que otro factor por el cual me resultó más fácil esta actividad fue porque para iniciar el trabajo reutilicé el código en el que se exploraba el polimorfismo y la herencia para poder superar mi bloqueo con la manera en la que iba a aplicar otros conceptos.
+
+✅ 3. ¿Qué parte te pareció más difícil o te tomó más tiempo? ¿Cómo la resolviste?
+
+* Realizar el análisis y modificación de los códigos de ejemplo fue un trabajo laargo que me tomó mucho tiempo y me exigió demasiado a la hora de pensar cómo integrar conceptos de otras unidades, pero ya después del segundo ejemplo se me hizo más fácil continuar el ritmo porque a pesar de ser largo el proceso de desarrollo y cambios, ya me estaba divirtiendo ver los resultados. Además lo que tenía que responder era lo mismo y fui comprendiendo qué partes del código analizar directamente para responder cada pregunta y las respuestas ya sabía cómo estructurarlas con mayor rapidez y coherencia. Finalmente, como mi parte favorita del proceso es idear y crear conceptos, una vez con todo claro crear se hizo más fácil.
+
+✅ 4. Si pudieras repetir esta unidad, ¿Qué harías diferente para mejorar tu comprensión de los conceptos?
+
+* Yo me tomé bastante tiempo en la actividad 2, en la que se exploraban los ejemplos y en parte me sentía abrumada por ello pero pensándolo bien fue lo mejor porque me permitió comprender con calma cada concepto aplicado y cada nueva manera de abordarlo. Si pudiera hacer algo diferente tal vez pensaría que ver todos los ejemplos y asignarles a cada uno desde el principio el concepto con el que quería explorar para ahorrarme un poco de tiempo y frustración. Pero con una mirada general sobre mi desempeño en la unidad considero que aprendí a mi ritmo y a lo que se acomodaba a mi comprensión así que si tuviera que volver a hacerla la haría de la misma manera.
+
+✅ 5. ¿Crees que lo que aprendiste en esta unidad te servirá en futuros proyectos? ¿Por qué si o por qué no?
+
+* Sí, me va a servir para futuros proyectos porque aunque mi enfoque realmente está más orientado hacia el diseño de experiencias, es importante hablar con propiedad sobre lo que aprendo para poder comunicarlo a las personas que están orientadas a la parte técnica y de desarrollo. Comprender cómo funcionan los conceptos que exploramos también me da más libertad de creación en cuanto a simulaciones que a futuro le puedo mostrar a un cliente o a mi equipo de trabajo para visualizar con facilidad los conceptos que proponga para eventos, experiencias y productos. Lo que para mí es parte esencial como diseñadora, transmitir ideas que tengo en mi cabeza de manera efectiva, clara y coherente.
+
+✅ 6. ¿Qué parte de esta unidad te gustaría profundizar más? ¿Por qué?
+
+* Me gustaría poder explorar más con el polimorfismo y la herencia en diferentes proyectos, ver cómo los puedo implementar en otras aplicaciones, con más sensores e interacciones. Son conceptos que me han quedado claros pero aprender haciendo es la mejor manera en la que puedo interiorizarlos y aumentar mi portafolio de ideas para distintos proyectos. Además que también son conceptos claves en POO porque facilitan la integración y reutilización de código que aunque no suene para mí como lo más llamativo sí facilita mucho la vida de los programamdores y quién quita que en futuro mis intereses cambien y quiera ser una programadora pro 500.
+
+✅ 7. ¿Qué concepto de esta unidad se podría aplicar a tu área de interés profesional? ¿Por qué?
+
+* El sistema de partículas con fuerzas y creo que en general cualquier simulación que modele las fuerzas porque es muy divertido otorgarles a objetos digitales características del mundo real. Se me hace muy interesante pensar en todas las posibilidades de simulación y experiencias que se pueden lograr jugando con las leyes naturales del mundo y aplicándolas a conceptos propios. También me parece super importante el énfasis de esta unidad en cuanto a la generación, eliminación y gestión de las partículas en la memoria porque me hizo muy consciente de la importancia de tener esto en cuenta para que mis proyectos, además de bonitos, interesantes y visuales; sean a su vez óptimos y funcionales.
