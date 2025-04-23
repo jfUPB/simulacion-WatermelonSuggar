@@ -182,3 +182,23 @@ this.maxforce = 0.05; // ← Fuerza de dirección máxima (steering)
 ____________________________________________________________________________________________
 
 ### Experimentación
+
+![image](https://github.com/user-attachments/assets/81de7795-1f57-4e39-996f-2de6922c37d1)
+
+Enlace a la simulación [aquí](https://editor.p5js.org/WatermelonSuggar/sketches/wjAXfCcWb)}
+
+**Modificaciones**
+
+1. Cambié drásticamente el peso de la separación, pasó de 1.5 a 5.0 pero también agregué otra fuerza de target que es la que atrae a los boids y es la principal con un peso de 5.5. La cohesión y alineación quedaron iguales. En la simulación se nota cómo se prioriza seguir al nuevo objeto y también cómo se mantienen separados, dispersos y salen desde varias direcciones.
+   
+2. Modifiqué el radio de separación por 90 así que los boids van bastante separados, quería ver qué pasaba si las variables claves de la cohesión y la alineación eran diferentes, así que con la primera conservé el valor de 50 y a la segunda uno de 20.
+
+* Ahora los boids tienden a mantenerse mucho más separados entre sí, como si se repelieran fuertemente, incluso desde la distancia.
+  
+* Manteniendo la cohesión sigue igual la atracción hacia el centro del grupo, por lo que los boids podrían intentan agruparse constantemente, luchando contra la separación.
+
+* Con la alineación los boids copien rápidamente la dirección del grupo, incluso cuando están bastante lejos entre sí.
+  
+3. Introduje un objetivo (target) que todos los boids intentan seguir (usando una fuerza de seek) y es la nueva fuerza principal del ejemplo por lo que siempre tienden a donde se encuentra el target que es justo la posición del mouse sobre el canvas.
+
+
