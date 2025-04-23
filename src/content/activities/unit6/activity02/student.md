@@ -30,13 +30,40 @@ Así convierte su posición en coordenadas de fila y columna dentro del campo, y
 
 🌊 Una vez que tiene el vector deseado del campo, ¿cómo lo utiliza para calcular la fuerza de dirección (steering force)? (pista: implica calcular la diferencia con la velocidad actual y limitar la fuerza).
 
-Ese vector le dice hacia dónde debería ir y qué tan rápido. Entonces, el agente:
+* Ese vector le dice hacia dónde debería ir y qué tan rápido. Entonces, el agente:
 
 1. Toma ese vector y lo ajusta a su velocidad máxima, porque quiere ir hacia allá a toda velocidad.
 2. Compara esa nueva dirección con la velocidad que ya lleva. La diferencia entre ambas le dice cuánto necesita girar o cambiar su movimiento.
 3. Esa diferencia es la fuerza de dirección (steering force).
 4. Para no hacer giros bruscos, limita esa fuerza a un valor máximo.
 5. Finalmente, aplica esa fuerza para corregir su rumbo suavemente.
+
+## Parámetros clave
+
+🪸La resolución del campo de flujo (el tamaño de las celdas de la cuadrícula).
+
+* Esto controla qué tan grandes son las celdas de la cuadrícula del campo de flujo (es decir, cuántas flechas habrá en el lienzo).
+* En el código se encuentra en sketch.js
+
+```js
+flowfield = new FlowField(20);
+```
+
+> El número 20 es la resolución. Mientras más bajo el número, más celdas y más detalles tendrá el campo (porque cada celda será más pequeña).
+
+🪸La velocidad máxima (maxspeed) y la fuerza máxima (maxforce) de los agentes.
+
+* **Velocidad máxima:** es el parámetro que limita qué tan rápido puede ir el agente otorgando un tope máximo evitando que se descontrole. Se define en la siguiente patrte de sketch.js
+
+* **Fuerza máxima:** es quien controla cuánto puede cambiar de dirección un agente en cada momento. Si es muy baja, el giro será suave. Si es alta, puede cambiar de rumbo más bruscamente.
+
+```js
+new Vehicle(random(width), random(height), random(2, 5), random(0.1, 0.5))
+```
+
+>  El tercer parámetro (random(2, 5)) es la velocidad máxima, y varía aleatoriamente entre 2 y 5 para cada agente. 
+
+> El cuarto parámetro (random(0.1, 0.5)) es la fuerza máxima de dirección, significa que cada agente tendrá una fuerza de giro diferente entre 0.1 y 0.5.
 
 
 
