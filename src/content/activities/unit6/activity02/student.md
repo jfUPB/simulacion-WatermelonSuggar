@@ -65,5 +65,15 @@ new Vehicle(random(width), random(height), random(2, 5), random(0.1, 0.5))
 
 > El cuarto parámetro (random(0.1, 0.5)) es la fuerza máxima de dirección, significa que cada agente tendrá una fuerza de giro diferente entre 0.1 y 0.5.
 
+## Experimentación
 
+![image](https://github.com/user-attachments/assets/c76ae783-14f8-49f8-b4ac-354f364bb604)
+
+Enlace a la simulación [aquí](https://editor.p5js.org/WatermelonSuggar/sketches/bRtYgLCUZ)
+
+**Modificaciones aplicadas**
+
+1. Los vectores ahora se generan de manera diferente, ahora siguen una forma en espiral. La dirección de cada vector se calcula como un ángulo basado en la diferencia de posición (dir.heading()) y la magnitud (distancia al centro) multiplicada por un factor (dir.mag() * 0.05). Este factor asegura que los vectores se van girando progresivamente a medida que aumentan su distancia al centro, creando así una trayectoria en espiral.
+2. Reduje la resolución en un 50% por lo que ahora hay más celdas o cuadrículas para que los vehículos direccionen su movimiento.
+3. Asigné una velocidad máxima de 1, así que los agentes se mueven MUCHO más lento tratando en identificar la celda en la que están para poder moverse y una fuerza máxima de 0.02 por lo que gira lentamente y ahora parecen agentes perezosos.
 
