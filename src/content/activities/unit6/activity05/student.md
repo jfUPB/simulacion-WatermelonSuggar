@@ -18,6 +18,15 @@ Ejemplo: En mi simulación, las partículas parecen crear un patrón coral, din�
 * **Flocking:** Produce agrupamientos naturales y patrones como bandadas o cardúmenes. La belleza está en la forma en que pequeñas decisiones locales generan orden colectivo (un grupo que gira o escapa sin haber un “líder”).
 
 
-* **Ventajas y desventajas:** en tu opinión, ¿Cuáles podrían ser las ventajas o desventajas de usar uno u otro algoritmo para ciertos tipos de efectos visuales o simulaciones?
-* **El agente autónomo:** ¿Cómo te ayudaron estos dos ejemplos (Flow Fields y Flocking) a entender mejor el concepto de “agente autónomo”? ¿Qué características definen a un agente en estos sistemas?
-* **Emergencia:** ¿En qué momento observaste “comportamiento emergente” (complejidad o patrones no programados explícitamente) al trabajar con estos algoritmos?
+### Ventajas y desventajas
+
+* en tu opinión, ¿Cuáles podrían ser las ventajas o desventajas de usar uno u otro algoritmo para ciertos tipos de efectos visuales o simulaciones?
+
+### El agente autónomo
+
+* ¿Cómo te ayudaron estos dos ejemplos (Flow Fields y Flocking) a entender mejor el concepto de “agente autónomo”? ¿Qué características definen a un agente en estos sistemas?
+
+
+### Emergencia
+
+* ¿En qué momento observaste “comportamiento emergente” (complejidad o patrones no programados explícitamente) al trabajar con estos algoritmos?
