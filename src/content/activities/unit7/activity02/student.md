@@ -10,3 +10,24 @@ BUILDING BLOCKS
 * Render -> visualiza la simulación física
 * Runner (runner) -> actualiza el motor a intervalos fijos
 
+
+### Experimentos
+
+> Solo Matter.js
+
+![image](https://github.com/user-attachments/assets/cf32f4eb-814b-4ad9-b554-d4e33f1a1057)
+
+Enlace [aquí](https://editor.p5js.org/WatermelonSuggar/sketches/FzCBh58vtW)
+
+> P5.js y Matter.js
+
+![image](https://github.com/user-attachments/assets/3aef775a-cf3c-4304-a68f-96734c301196)
+
+Enlace [aquí](https://editor.p5js.org/WatermelonSuggar/sketches/fP3sasNny)
+
+
+### Retos enfrentados
+
+* La integración de Matter.js me resultó sencilla, Patt Vira explicó todo muy bien y me gustó mucho observar cómo funciona su estructira mental para resolver problemas que se van presentando de mano con la documentación.
+
+
