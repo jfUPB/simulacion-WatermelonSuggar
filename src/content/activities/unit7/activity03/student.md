@@ -27,7 +27,7 @@ Palabra elegida: **COLAPSAR**
 
 **Experimento**
 
-Enlace [aquí](https://editor.p5js.org/WatermelonSuggar/sketches/bXOsN1jV-)
+Enlace [aquí](https://editor.p5js.org/WatermelonSuggar/full/bXOsN1jV-)
 
 ![image](https://github.com/user-attachments/assets/192ceb3b-717b-4d57-a842-a270f505d6ed)
 
