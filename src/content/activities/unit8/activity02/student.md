@@ -2,17 +2,73 @@
 
 **Definición del concepto**
 
-Define el concepto visual: ¿Qué tipo de atmósfera o estética visual quieres crear? ¿Abstracta, orgánica, geométrica, caótica, tranquila? ¿Hay alguna metáfora o idea que quieras explorar visualmente en respuesta a la música? Escribe una breve descripción de tu concepto.
-Selecciona la música:
-Elige una pieza musical que te inspire y sobre la que trabajarás. Proporciona un enlace o el archivo si es posible. Debe tener variaciones interesantes (dinámica, ritmo, textura).
-Identifica los inputs de audio: ¿Qué características específicas del sonido usarás para controlar tus visuales? Considera al menos dos:
-Amplitud (volumen): ¿Cómo usarás el nivel general de volumen? (Ej: para controlar tamaño, brillo, cantidad de elementos).
-Análisis de frecuencia (FFT): ¿Utilizarás datos del espectro de frecuencias? (Ej: energía en graves para controlar un color, energía en agudos para la velocidad de partículas, distribución general para la complejidad). Especifica qué bandas o datos del FFT planeas usar.
-Define inputs de interacción:** ¿Cuáles serán las formas de interacción del usuario además del audio? (Ej: mouse cambia paleta de colores, teclas ajustan sensibilidad).
-Documenta los inputs: resume claramente tu concepto, la fuente de audio elegida y la lista detallada de inputs (audio y la interacción) que alimentarán tu sistema generativo.
-🧐🧪✍️ Reporta en tu bitácora
+* Me gustaría explorar la metáfora de lo oculto, la búsqueda de respuestas más allá de lo que que se observa a simple vista, Una exploración visual inspirada en "Los dioses ocultos" de Caifanes. La obra evoca una atmósfera entre _lo místico y lo caótico_, donde lo orgánico y lo geométrico se entrelazan para sugerir una búsqueda interior. Lo que no se ve, se manifiesta a través del sonido.
 
-La descripción de tu concepto visual.
-La pieza musical elegida (con enlace/archivo si es posible) o la descripción de tu fuente de audio alternativa.
-La lista detallada de inputs de audio que usarás (Amplitud, FFT) y cómo planeas usarlos conceptualmente.
-La descripción de cualquier input de interacción.
+**Pieza musical elegida**
+
+["Los dioses ocultos" – Caifanes](https://www.youtube.com/watch?v=5jMFlNiuszQ)
+
+**Inputs de audio**
+
+1. Amplitud (Volumen general)
+
+* Descripción técnica: Valor entre 0 y 1 que indica el volumen promedio en un instante.
+
+> Uso conceptual:
+> * A mayor volumen, más elementos visuales emergen desde el fondo o capas ocultas. Representa el momento en que “los dioses ocultos” se manifiestan.
+> * El tamaño de los elementos orgánicos o geométricos crece o pulsa con el volumen, generando una sensación de latido vital o invocación.
+> * El número de partículas, líneas o nodos aumenta con la amplitud, reforzando la sensación de caos o complejidad.
+
+2. FFT (Transformada Rápida de Fourier – análisis de espectro de frecuencias)
+
+* Se extraen energías de distintas bandas para controlar distintos aspectos visuales.
+
+* Banda de Graves (20–250 Hz)
+Uso técnico: fft.getEnergy("bass")
+
+> Uso conceptual:
+> * Controla la base estructural de la escena: formas pesadas, raíces o elementos que se expanden desde el centro o el fondo.
+> * Representa lo ancestral, lo enterrado o lo profundo.
+
+* Banda de Medios (250–2000 Hz)
+Uso técnico: fft.getEnergy("mid")
+
+> Uso conceptual:
+> * Controla las distorsiones geométricas: ondulaciones, quiebres o cambios de forma en estructuras previamente regulares.
+> * Genera la tensión visual entre orden y caos.
+
+* Banda de Agudos (2000–8000 Hz)
+Uso técnico: fft.getEnergy("treble")
+
+> Uso conceptual:
+> * Controla la velocidad de partículas o aparición de destellos y líneas finas.
+> * Representa lo etéreo, lo invisible que se deja ver brevemente, como un destello de comprensión o una revelación fugaz.
+
+**Inputs de interacción**
+
+1. Mouse (posición y clic)
+  
+* Posición X/Y:
+  * X: Transición entre tipos de geometría (circular ↔ triangular ↔ fractal), revelando diferentes facetas del “oculto”.
+  * Y: Control del nivel de deformación caótica en las figuras, como si el usuario “rasgara el velo”.
+
+* Click:
+  * Activa una capa oculta visual: símbolos, texto o patrones que aparecen brevemente como si fueran mensajes revelados al tacto.
+
+* Teclado
+  * Cambia la paleta de colores, alterna entre tonos sombríos (oscuros, misteriosos) y saturados (revelación, energía).
+ 
+
+**RESUMEN DE INPUTS**
+
+
+| Tipo        | Variable Técnica                     | Uso Visual / Conceptual                            |
+| ----------- | ------------------------------------ | -------------------------------------------------- |
+| Amplitud    | `amplitude.getLevel()`               | Escala, densidad, intensidad visual (revelación)   |
+| FFT Graves  | `fft.getEnergy("bass")`              | Estructuras profundas, raíces, lo oculto ancestral |
+| FFT Medios  | `fft.getEnergy("mid")`               | Distorsión, caos geométrico                        |
+| FFT Agudos  | `fft.getEnergy("treble")`            | Partículas, destellos, revelaciones fugaces        |
+| Mouse X     | `mouseX`                             | Cambia geometrías base                             |
+| Mouse Y     | `mouseY`                             | Ajusta caos/deformación                            |
+| Mouse Click | `mouseIsPressed`                     | Revela capas ocultas (símbolos/texto)              |
+| Teclas      | `keyPressed()`                       | Cambia paleta de colores                           |
