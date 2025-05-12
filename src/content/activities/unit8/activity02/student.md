@@ -2,11 +2,11 @@
 
 **Definición del concepto**
 
-* Me gustaría explorar la metáfora de lo oculto, la búsqueda de respuestas más allá de lo que que se observa a simple vista, Una exploración visual inspirada en "Los dioses ocultos" de Caifanes. La obra evoca una atmósfera entre _lo místico y lo caótico_, donde lo orgánico y lo geométrico se entrelazan para sugerir una búsqueda interior. Lo que no se ve, se manifiesta a través del sonido.
+* Quiero expermientar con el viaje sensorial que surge al escuchar una canción, esa inmersión profunda en la introspección. Esta exploración visual, inspirada en 'The Emptiness Machine' de Linkin Park, busca capturar la tensión entre el caos y la armonía. Lo orgánico y lo geométrico se entrelazan, revelando una búsqueda interior donde lo oculto se manifiesta a través del sonido."
 
 **Pieza musical elegida**
 
-["Los dioses ocultos" – Caifanes](https://www.youtube.com/watch?v=5jMFlNiuszQ)
+["The Emptiness Machine" – Linkin Park](https://www.youtube.com/watch?v=CDwjNYgn608)
 
 **Inputs de audio**
 
@@ -53,11 +53,10 @@ Uso técnico: fft.getEnergy("treble")
   * Y: Control del nivel de deformación caótica en las figuras, como si el usuario “rasgara el velo”.
 
 * Click:
-  * Activa una capa oculta visual: símbolos, texto o patrones que aparecen brevemente como si fueran mensajes revelados al tacto.
+  * Activa una capa oculta visual: símbolo o patrones que aparecen brevemente como si fueran mensajes revelados al tacto.
 
 * Teclado
-  * Cambia la paleta de colores, alterna entre tonos sombríos (oscuros, misteriosos) y saturados (revelación, energía).
- 
+  * Cambia la paleta de colores, alterna entre tonos sombríos oscuros y misteriosos.
 
 **RESUMEN DE INPUTS**
 
