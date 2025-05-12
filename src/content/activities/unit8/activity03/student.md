@@ -2,8 +2,9 @@
 
 1. ¿Cuál será la lógica central que genere los visuales?
 
-Mi sistema se centrará en un campo de flujo dinámico que evoluciona en respuesta al FFT y que guía a una nube de partículas (elementos visuales orgánico-geométricos). Estas partículas no solo reaccionan al audio, sino que “buscan” lo oculto (zonas de mayor energía) y se transforman visualmente con la interacción del usuario. 
-La visualización se compone de múltiples capas dinámicas que emergen y evolucionan en respuesta al análisis de la música “Los dioses ocultos” de Caifanes. El corazón del sistema está compuesto por:
+El sistema se fundamenta en un campo de flujo dinámico que responde a la estructura y energía del audio, específicamente al análisis FFT de The Emptiness Machine. Este flujo guía una nube de partículas compuesta por elementos orgánico-geométricos que representan el caos y la introspección presentes en la canción.
+
+La visualización emerge en capas dinámicas que reflejan el contraste entre lo estructurado y lo desordenado, evocando la dualidad de vacío y búsqueda que inspira la obra.
 
 * Un sistema de partículas que se mueve guiado por un campo vectorial (flow field).
 * Una red de conexiones temporales entre partículas que se activan con picos de amplitud.
@@ -19,7 +20,6 @@ La visualización se compone de múltiples capas dinámicas que emergen y evoluc
 
 * Partículas orgánicas: puntos deformables que dejan estelas o se conectan entre sí.
 * Geometrías pulsantes: figuras semirregulares que vibran o se distorsionan con Perlin noise.
-* Líneas de conexión entre partículas cercanas (solo en ciertas bandas de frecuencia).
 * Símbolos ocultos que emergen en picos o al clic.
 
 3. Propiedades controladas dinámicamente:
