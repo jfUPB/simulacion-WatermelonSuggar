@@ -7,8 +7,8 @@ La visualización se compone de múltiples capas dinámicas que emergen y evoluc
 
 * Un sistema de partículas que se mueve guiado por un campo vectorial (flow field).
 * Una red de conexiones temporales entre partículas que se activan con picos de amplitud.
-* Una capa oculta de símbolos visuales que se revelan solo en presencia de alto volumen, haciendo alusión al concepto de verdades invisibles que emergen con la música.
-
+* Una capa oculta de símbolos visuales que se revelan al hacer click en la pantalla.
+  
 > Este sistema combina:
 > * Generación de partículas con fuerzas dinámicas.
 > * Campos vectoriales dinámicos modulados por el análisis de frecuencia (FFT).
@@ -20,7 +20,7 @@ La visualización se compone de múltiples capas dinámicas que emergen y evoluc
 * Partículas orgánicas: puntos deformables que dejan estelas o se conectan entre sí.
 * Geometrías pulsantes: figuras semirregulares que vibran o se distorsionan con Perlin noise.
 * Líneas de conexión entre partículas cercanas (solo en ciertas bandas de frecuencia).
-* Símbolos ocultos (dibujos, palabras, signos) que emergen en picos o al clic.
+* Símbolos ocultos que emergen en picos o al clic.
 
 3. Propiedades controladas dinámicamente:
 
@@ -46,10 +46,6 @@ La visualización se compone de múltiples capas dinámicas que emergen y evoluc
 | `fft.getEnergy("mid")`    | Velocidad y dispersión de partículas, color base.                              |
 | `fft.getEnergy("treble")` | Aparición de destellos, estallidos o conexiones entre partículas.              |
 | `mouseX` / `mouseY`       | Factor de deformación geométrica (X), nivel de caos (Y).                       |
-| `mouseIsPressed`          | Revela símbolos/textos ocultos brevemente.                                     |
+| `mouseIsPressed`          | Revela símbolos ocultos brevemente.                                            |
 | `keyPressed()`            | Cambia paletas visuales o sensibilidad del sistema.                            |
 
-
-**Referencia visual**
-
-![image](https://github.com/user-attachments/assets/98e2930c-9199-437d-b2e2-e252b8f3e677)
