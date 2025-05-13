@@ -1,10 +1,36 @@
-Explica brevemente cómo configuraste p5.sound y qué datos de audio estás extrayendo.
+### Configuración de p5.sound
 
-[Este](https://www.youtube.com/watch?v=8O5aCwdopLo&list=PL-oa1ZakLifzv9XNZNoEffqgN3fFMVhvH) tutorial de Patt Vira me ayudó en la configuración del ambiente de trabajo. Usé las funciones de 
+[Este](https://www.youtube.com/watch?v=8O5aCwdopLo&list=PL-oa1ZakLifzv9XNZNoEffqgN3fFMVhvH) tutorial de Patt Vira me ayudó en la configuración del ambiente de trabajo.
 
+1. Carga de la pista: En preload() se importa el .mp3 con loadSound() y se guarda en la variable song.
 
-Muestra fragmentos de código clave donde los datos del audio modulan tu algoritmo generativo y donde el algoritmo controla los outputs visuales.
-Incluye el código completo de tu sketch final (o enlace a repositorio).
+2. Creación de analizadores (en setup()):
+
+```js
+amp = new p5.Amplitude();          // nivel global de volumen
+fft = new p5.FFT(smoothing, bins); // smoothing = 0.5, bins = 512
+
+```
+* p5.Amplitude() mide la envolvente de la señal.
+* p5.FFT() calcula la Transformada Rápida de Fourier;
+  * smoothing (0 – 1) filtra cambios bruscos,
+  * bins = 512 define la resolución espectral.
+
+3. Conexión de la fuente
+* En cuanto se hace **song.play()**, p5.sound enruta automáticamente el audio al bus principal, que ya es la entrada por defecto de amp y fft; no hay que llamar a setInput() explícitamente.
+
+**Datos de audio extraídos cada cuadro (draw)**
+
+| Método                                         | Rango / tipo                                                        | Uso en tu código                                                                                                                                                            |
+| ---------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `amp.getLevel()`                               | Amplitud global (0 – 1)                                             | Modula transparencia del fondo y tamaño base de cada partícula.                                                                                                             |
+| `fft.analyze()`                                | Vector de **512 amplitudes** (0 – 255)                              | Se pasa íntegro a `Roots` para que la longitud de cada raíz dependa del bin correspondiente.                                                                                |
+| `fft.waveform()`                               | Forma de onda temporal (–1 … 1)                                     | Perturba el tamaño instantáneo de la partícula según su posición X.                                                                                                         |
+| `fft.getEnergy('bass') / ('mid') / ('treble')` | Potencia media en tres bandas: 20–250 Hz, 250–2000 Hz, 2000–8000 Hz | - Graves → radio y grosor de las raíces <br>- Medios → deformación geométrica de las partículas <br>- Agudos → cantidad de partículas nuevas y disparo de destellos (picos) |
+
+Con esta configuración mínima (p5.Amplitude + p5.FFT) se obtienen niveles, espectro, bandas y forma de onda en tiempo real, suficientes para que cada subsistema visual reaccione de forma distinta al contenido
+
+### Fragmentos claves del código
 
 **El audio modifica los parámetros internos**
 
@@ -24,9 +50,10 @@ Incluye el código completo de tu sketch final (o enlace a repositorio).
 | `Particle.display(pg,col)`                    | `this.size`, `this.deform`, `this.type`         | Cada partícula se dibuja como círculo, triángulo o blob; su tamaño y distorsión están ya modulados por la amplitud y los medios; también se traza la estela (`line(this.prev, this.pos)`) que muestra la inercia del flujo. |
 | `ParticleSystem.update → p.applyForce(force)` | `this.flowField.lookup(p.pos)`                  | El **campo de flujo** (alimentado indirectamente por el audio al actualizarse en otra clase) desvía cada partícula, añadiendo un movimiento orgánico que se acumula en las estelas.                                         |
 
+### Código completo
 
+[Proyecto final unidad 8](https://editor.p5js.org/WatermelonSuggar/sketches/aKOC00neD)
 
-**Código**
 
 flowField.js
 
