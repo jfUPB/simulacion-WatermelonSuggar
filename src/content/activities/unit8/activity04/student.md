@@ -1,9 +1,22 @@
-
-
-
 Explica brevemente cómo configuraste p5.sound y qué datos de audio estás extrayendo.
+
+
+
+
+
 Muestra fragmentos de código clave donde los datos del audio modulan tu algoritmo generativo y donde el algoritmo controla los outputs visuales.
 Incluye el código completo de tu sketch final (o enlace a repositorio).
+
+**El audio modifica los parámetros internos**
+
+| Archivo / fragmento clave                                      | Qué dato de audio entra                                                                 | Parámetro interno que cambia                          | Efecto conceptual                                                                                                                                                                                      |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `sketch.js` (variables calculadas en `draw`)                   | `fft.getEnergy('bass' / 'mid' / 'treble')`, `amp.getLevel()`                            | `volLow`, `volMid`, `volHigh`, `ampLvl`               | Estos cuatro valores son la “materia prima” que todas las clases usan para reaccionar al sonido.                                                                                                       |
+| `Roots.update(bassEnergy, spec)`                               | **Graves** (`bassEnergy`), espectro completo (`spec`)                                   | `this.radius`, `this.strokeW` y la copia del espectro | El radio y el grosor de cada raíz crecen/encogen con los graves; el array `spec` se guarda para usarse al dibujar cada raíz.                                                                           |
+| `ParticleSystem.update(ampLvl, mid, treble, peakHit, waveArr)` | **Agudos** (`treble` → `spawnCount`), picos de agudos (`peakHit`)                       | Nº de partículas que se generan cada frame            | Más energía en agudos ⇒ más partículas; un pico dispara 20 chispas extra.                                                                                                                              |
+| `Particle.update(ampLvl, midEnergy, waveArr)`                  | **Amplitud global** (`ampLvl`), **medios** (`midEnergy`), **forma de onda** (`waveArr`) | `this.size`, `this.deform`                            | - El tamaño “pulsa” con el volumen <br>- La deformación geométrica aumenta con la energía de medios <br>- Un refuerzo local (waveBoost) ondula la partícula según la forma de onda bajo su posición X. |
+
+
 
 **Código**
 
