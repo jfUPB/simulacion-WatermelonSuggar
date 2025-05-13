@@ -1,7 +1,6 @@
 Explica brevemente cómo configuraste p5.sound y qué datos de audio estás extrayendo.
 
-
-
+[Este](https://www.youtube.com/watch?v=8O5aCwdopLo&list=PL-oa1ZakLifzv9XNZNoEffqgN3fFMVhvH) tutorial de Patt Vira me ayudó en la configuración del ambiente de trabajo. Usé las funciones de 
 
 
 Muestra fragmentos de código clave donde los datos del audio modulan tu algoritmo generativo y donde el algoritmo controla los outputs visuales.
@@ -15,6 +14,15 @@ Incluye el código completo de tu sketch final (o enlace a repositorio).
 | `Roots.update(bassEnergy, spec)`                               | **Graves** (`bassEnergy`), espectro completo (`spec`)                                   | `this.radius`, `this.strokeW` y la copia del espectro | El radio y el grosor de cada raíz crecen/encogen con los graves; el array `spec` se guarda para usarse al dibujar cada raíz.                                                                           |
 | `ParticleSystem.update(ampLvl, mid, treble, peakHit, waveArr)` | **Agudos** (`treble` → `spawnCount`), picos de agudos (`peakHit`)                       | Nº de partículas que se generan cada frame            | Más energía en agudos ⇒ más partículas; un pico dispara 20 chispas extra.                                                                                                                              |
 | `Particle.update(ampLvl, midEnergy, waveArr)`                  | **Amplitud global** (`ampLvl`), **medios** (`midEnergy`), **forma de onda** (`waveArr`) | `this.size`, `this.deform`                            | - El tamaño “pulsa” con el volumen <br>- La deformación geométrica aumenta con la energía de medios <br>- Un refuerzo local (waveBoost) ondula la partícula según la forma de onda bajo su posición X. |
+
+
+**Los parámetros se convierten en visuales**
+
+| Fragmento de dibujo                           | Variables usadas                                | Qué se pinta realmente                                                                                                                                                                                                      |
+| --------------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Roots.display(pg,col)`                       | `this.radius`, `this.strokeW`, `this.spec[bin]` | 64 líneas radiales; la longitud de cada línea (`len`) se mapea del valor espectral del bin correspondiente, creando raíces que crecen o se retraen al ritmo del espectro.                                                   |
+| `Particle.display(pg,col)`                    | `this.size`, `this.deform`, `this.type`         | Cada partícula se dibuja como círculo, triángulo o blob; su tamaño y distorsión están ya modulados por la amplitud y los medios; también se traza la estela (`line(this.prev, this.pos)`) que muestra la inercia del flujo. |
+| `ParticleSystem.update → p.applyForce(force)` | `this.flowField.lookup(p.pos)`                  | El **campo de flujo** (alimentado indirectamente por el audio al actualizarse en otra clase) desvía cada partícula, añadiendo un movimiento orgánico que se acumula en las estelas.                                         |
 
 
 
