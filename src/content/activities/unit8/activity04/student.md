@@ -393,5 +393,14 @@ function keyPressed() {
 }
 ```
 
+### Video demo
 
-Inserta un VIDEO DEMO (si esta vez si, pero trata de optimizar el archivo) (¡esencial!) de tu simulación en acción, CON la música sonando. Debe mostrar la respuesta al audio y la naturaleza generativa.
+[Sinfonía generativa](https://youtu.be/5KCNFSo9DCw)
+
+![Miniatura](https://github.com/user-attachments/assets/f26b3466-3058-4a45-b356-799c0e4733fc)
+
+![image](https://github.com/user-attachments/assets/cea8b9ff-9c27-4833-9acc-f4c20ef01561)
+
+![image](https://github.com/user-attachments/assets/d76e2073-fc89-4110-8f84-fab8fb3a19e8)
+
+
