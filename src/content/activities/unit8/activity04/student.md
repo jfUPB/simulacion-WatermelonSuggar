@@ -326,7 +326,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(windowWidth, windowHeight);
   noCursor();
 
   amp = new p5.Amplitude();
@@ -335,6 +335,10 @@ function setup() {
   flowField = new FlowField(25);
   roots     = new Roots();
   ps        = new ParticleSystem(flowField);
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
