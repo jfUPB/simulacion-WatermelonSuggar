@@ -1,3 +1,15 @@
+
+### Video demo
+
+[Sinfonía generativa](https://youtu.be/ZvAU9xYaHUg)
+
+![Miniatura](https://github.com/user-attachments/assets/f26b3466-3058-4a45-b356-799c0e4733fc)
+
+![image](https://github.com/user-attachments/assets/cea8b9ff-9c27-4833-9acc-f4c20ef01561)
+
+![image](https://github.com/user-attachments/assets/d76e2073-fc89-4110-8f84-fab8fb3a19e8)
+
+
 ### Configuración de p5.sound
 
 [Este](https://www.youtube.com/watch?v=8O5aCwdopLo&list=PL-oa1ZakLifzv9XNZNoEffqgN3fFMVhvH) tutorial de Patt Vira me ayudó en la configuración del ambiente de trabajo.
@@ -396,15 +408,3 @@ function keyPressed() {
   palIndex = (palIndex + 1) % palettes.length;
 }
 ```
-
-### Video demo
-
-[Sinfonía generativa](https://youtu.be/5KCNFSo9DCw)
-
-![Miniatura](https://github.com/user-attachments/assets/f26b3466-3058-4a45-b356-799c0e4733fc)
-
-![image](https://github.com/user-attachments/assets/cea8b9ff-9c27-4833-9acc-f4c20ef01561)
-
-![image](https://github.com/user-attachments/assets/d76e2073-fc89-4110-8f84-fab8fb3a19e8)
-
-
